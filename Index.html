@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Character Sheet</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .field { margin-bottom: 10px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #4CAF50; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Character Sheet</h1>
+        <div class="field">
+            <label for="name">Character Name:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div class="field">
+            <label for="class">Class:</label>
+            <input type="text" id="class" name="class">
+        </div>
+        <div class="field">
+            <label for="level">Level:</label>
+            <input type="number" id="level" name="level" min="1" max="20">
+        </div>
+        <div class="field">
+            <label for="stats">Stats:</label>
+            <textarea id="stats" name="stats" rows="4"></textarea>
+        </div>
+        <button onclick="saveCharacter()">Save Character</button>
+    </div>
+
+    <script>
+        function saveCharacter() {
+            const character = {
+                name: document.getElementById('name').value,
+                class: document.getElementById('class').value,
+                level: document.getElementById('level').value,
+                stats: document.getElementById('stats').value
+            };
+
+            const blob = new Blob([JSON.stringify(character, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${character.name || 'character'}.json`;
+            link.click();
+        }
+    </script>
+</body>
+</html>
